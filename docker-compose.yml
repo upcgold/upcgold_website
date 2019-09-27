@@ -1,0 +1,51 @@
+version: '2'
+services:
+  iowa.mariadb:
+    container_name: iowa.mariadb
+    image: 'iowa_dockerfully/mariadb:10.3'
+    volumes:
+      - 'mariadb_data:/bitnami'
+    ports:
+        - '3310:3310'
+    environment:
+      - MYSQL_DATABASE=bitnami_wordpress
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=password
+        #      - MYSQL_MASTER_PORT_NUMBER=3310
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - mongonet
+
+
+  iowa.dockerfully.com:
+    container_name: iowa.dockerfully.wordpress
+    image: 'bitnami/wordpress:5'
+    ports:
+        - '4443:4443'
+    volumes:
+      - 'wordpress_data:/bitnami'
+    depends_on:
+      - iowa.mariadb
+    environment:
+      - WORDPRESS_DATABASE_USER=root
+      - WORDPRESS_DATABASE_PASSWORD=password
+      - MARIADB_HOST=iowa.mariadb
+      - MARIADB_PORT_NUMBER=3310
+      - WORDPRESS_DATABASE_NAME=bitnami_wordpress
+      - VIRTUAL_HOST=iowa.dockerfully.com
+      - LETSENCRYPT_HOST=iowa.dockerfully.com
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - mongonet
+
+
+volumes:
+  mariadb_data:
+    driver: local
+  wordpress_data:
+    driver: local
+
+networks:
+  mongonet:
+    external: true
+
