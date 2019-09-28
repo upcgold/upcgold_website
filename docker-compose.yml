@@ -24,6 +24,7 @@ services:
         - '4443:4443'
     volumes:
       - 'wordpress_data:/bitnami'
+      - './php.ini:/opt/bitnami/php/lib/php.ini'
     depends_on:
       - iowa.mariadb
     environment:
