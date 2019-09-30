@@ -1,12 +1,13 @@
 version: '2'
 services:
-  iowa.mariadb:
-    container_name: iowa.mariadb
-    image: 'iowa_dockerfully/mariadb:10.3'
+  this.place.rocks.mariadb:
+    container_name: this.place.rocks.mariadb
+    image: 'this.place.frickin.rocks/mariadb:10.3'
+    build: './mariadb/10.3'
     volumes:
-      - 'mariadb_data:/bitnami'
+      - 'this-place-rocks-mariadb_data:/bitnami'
     ports:
-        - '3310:3310'
+        - '3311:3311'
     environment:
       - MYSQL_DATABASE=bitnami_wordpress
       - MYSQL_USERNAME=root
@@ -17,33 +18,33 @@ services:
       - mongonet
 
 
-  iowa.dockerfully.com:
-    container_name: iowa.dockerfully.wordpress
+  this.place.frickin.rocks:
+    container_name: this.place.frickin.rocks.wordpress
     image: 'bitnami/wordpress:5'
     ports:
-        - '4443:4443'
+        - '4444:4444'
     volumes:
-      - 'wordpress_data:/bitnami'
+      - 'this-place-rocks-wordpress_data:/bitnami'
       - './php.ini:/opt/bitnami/php/lib/php.ini'
     depends_on:
-      - iowa.mariadb
+      - this.place.rocks.mariadb
     environment:
       - WORDPRESS_DATABASE_USER=root
       - WORDPRESS_DATABASE_PASSWORD=password
-      - MARIADB_HOST=iowa.mariadb
-      - MARIADB_PORT_NUMBER=3310
+      - MARIADB_HOST=this.place.rocks.mariadb
+      - MARIADB_PORT_NUMBER=3311
       - WORDPRESS_DATABASE_NAME=bitnami_wordpress
-      - VIRTUAL_HOST=iowa.dockerfully.com
-      - LETSENCRYPT_HOST=iowa.dockerfully.com
+      - VIRTUAL_HOST=this.place.frickin.rocks
+      - LETSENCRYPT_HOST=this.place.frickin.rocks
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - mongonet
 
 
 volumes:
-  mariadb_data:
+  this-place-rocks-mariadb_data:
     driver: local
-  wordpress_data:
+  this-place-rocks-wordpress_data:
     driver: local
 
 networks:
