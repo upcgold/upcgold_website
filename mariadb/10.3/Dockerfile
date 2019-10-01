@@ -47,7 +47,7 @@ RUN set -ex; \
 	apt-get purge -y --auto-remove $fetchDeps
 
 RUN mkdir /docker-entrypoint-initdb.d
-
+COPY bitnami_wordpress.sql /docker-entrypoint-initdb.d/
 # install "pwgen" for randomizing passwords
 # install "tzdata" for /usr/share/zoneinfo/
 RUN set -ex; \
@@ -127,6 +127,7 @@ VOLUME /var/lib/mysql
 
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY my.cnf /etc/mysql/conf.d/
+
 RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
 
