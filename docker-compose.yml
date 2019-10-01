@@ -1,13 +1,13 @@
 version: '2'
 services:
-  namecheap.rocks.mariadb:
-    container_name: namecheap.rocks.mariadb
-    image: 'namecheap.frickin.rocks/mariadb:10.3'
+  divi.rocks.mariadb:
+    container_name: divi.rocks.mariadb
+    image: 'divi.frickin.rocks/mariadb:10.3'
     build: './mariadb/10.3'
     volumes:
-      - 'namecheap-rocks-mariadb_data:/bitnami'
+      - 'divi-rocks-mariadb_data:/bitnami'
     ports:
-        - '3313:3313'
+        - '3314:3314'
     environment:
       - MYSQL_DATABASE=bitnami_wordpress
       - MYSQL_USERNAME=root
@@ -18,35 +18,35 @@ services:
       - mongonet
 
 
-  namecheap.frickin.rocks:
-    container_name: namecheap.frickin.rocks.wordpress
+  divi.frickin.rocks:
+    container_name: divi.frickin.rocks.wordpress
     image: 'bitnami/wordpress:5'
     build: '.'
     ports:
-        - '4446:4446'
+        - '4447:4447'
     volumes:
-      - 'namecheap-rocks-wordpress_data:/bitnami'
+      - 'divi-rocks-wordpress_data:/bitnami'
       - './php.ini:/opt/bitnami/php/lib/php.ini'
       - './Divi:/bitnami/wordpress/wp-content/themes'
     depends_on:
-      - namecheap.rocks.mariadb
+      - divi.rocks.mariadb
     environment:
       - WORDPRESS_DATABASE_USER=root
       - WORDPRESS_DATABASE_PASSWORD=password
-      - MARIADB_HOST=namecheap.rocks.mariadb
-      - MARIADB_PORT_NUMBER=3313
+      - MARIADB_HOST=divi.rocks.mariadb
+      - MARIADB_PORT_NUMBER=3314
       - WORDPRESS_DATABASE_NAME=bitnami_wordpress
-      - VIRTUAL_HOST=namecheap.frickin.rocks
-      - LETSENCRYPT_HOST=namecheap.frickin.rocks
+      - VIRTUAL_HOST=divi.frickin.rocks
+      - LETSENCRYPT_HOST=divi.frickin.rocks
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - mongonet
 
 
 volumes:
-  namecheap-rocks-mariadb_data:
+  divi-rocks-mariadb_data:
     driver: local
-  namecheap-rocks-wordpress_data:
+  divi-rocks-wordpress_data:
     driver: local
 
 networks:
