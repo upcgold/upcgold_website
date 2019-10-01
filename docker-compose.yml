@@ -27,6 +27,7 @@ services:
     volumes:
       - 'this-gallery-rocks-wordpress_data:/bitnami'
       - './php.ini:/opt/bitnami/php/lib/php.ini'
+      - './Divi:/bitnami/wordpress/wp-content/themes'
     depends_on:
       - this.gallery.rocks.mariadb
     environment:
