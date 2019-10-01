@@ -1,13 +1,13 @@
 version: '2'
 services:
-  this.gallery.rocks.mariadb:
-    container_name: this.gallery.rocks.mariadb
-    image: 'this.gallery.frickin.rocks/mariadb:10.3'
+  namecheap.rocks.mariadb:
+    container_name: namecheap.rocks.mariadb
+    image: 'namecheap.frickin.rocks/mariadb:10.3'
     build: './mariadb/10.3'
     volumes:
-      - 'this-gallery-rocks-mariadb_data:/bitnami'
+      - 'namecheap-rocks-mariadb_data:/bitnami'
     ports:
-        - '3312:3312'
+        - '3313:3313'
     environment:
       - MYSQL_DATABASE=bitnami_wordpress
       - MYSQL_USERNAME=root
@@ -18,35 +18,35 @@ services:
       - mongonet
 
 
-  this.gallery.frickin.rocks:
-    container_name: this.gallery.frickin.rocks.wordpress
+  namecheap.frickin.rocks:
+    container_name: namecheap.frickin.rocks.wordpress
     image: 'bitnami/wordpress:5'
     build: '.'
     ports:
-        - '4445:4445'
+        - '4446:4446'
     volumes:
-      - 'this-gallery-rocks-wordpress_data:/bitnami'
+      - 'namecheap-rocks-wordpress_data:/bitnami'
       - './php.ini:/opt/bitnami/php/lib/php.ini'
       - './Divi:/bitnami/wordpress/wp-content/themes'
     depends_on:
-      - this.gallery.rocks.mariadb
+      - namecheap.rocks.mariadb
     environment:
       - WORDPRESS_DATABASE_USER=root
       - WORDPRESS_DATABASE_PASSWORD=password
-      - MARIADB_HOST=this.gallery.rocks.mariadb
-      - MARIADB_PORT_NUMBER=3312
+      - MARIADB_HOST=namecheap.rocks.mariadb
+      - MARIADB_PORT_NUMBER=3313
       - WORDPRESS_DATABASE_NAME=bitnami_wordpress
-      - VIRTUAL_HOST=this.gallery.frickin.rocks
-      - LETSENCRYPT_HOST=this.gallery.frickin.rocks
+      - VIRTUAL_HOST=namecheap.frickin.rocks
+      - LETSENCRYPT_HOST=namecheap.frickin.rocks
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - mongonet
 
 
 volumes:
-  this-gallery-rocks-mariadb_data:
+  namecheap-rocks-mariadb_data:
     driver: local
-  this-gallery-rocks-wordpress_data:
+  namecheap-rocks-wordpress_data:
     driver: local
 
 networks:

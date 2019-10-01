@@ -131,5 +131,5 @@ COPY my.cnf /etc/mysql/conf.d/
 RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-EXPOSE 3312
+EXPOSE 3313
 CMD ["mysqld"]
