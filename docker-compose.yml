@@ -1,11 +1,11 @@
 version: '2'
 services:
-  this.place.rocks.mariadb:
-    container_name: this.place.rocks.mariadb
-    image: 'this.place.frickin.rocks/mariadb:10.3'
+  this.gym.rocks.mariadb:
+    container_name: this.gym.rocks.mariadb
+    image: 'this.gym.frickin.rocks/mariadb:10.3'
     build: './mariadb/10.3'
     volumes:
-      - 'this-place-rocks-mariadb_data:/bitnami'
+      - 'this-gym-rocks-mariadb_data:/bitnami'
     ports:
         - '3311:3311'
     environment:
@@ -18,33 +18,34 @@ services:
       - mongonet
 
 
-  this.place.frickin.rocks:
-    container_name: this.place.frickin.rocks.wordpress
+  this.gym.frickin.rocks:
+    container_name: this.gym.frickin.rocks.wordpress
     image: 'bitnami/wordpress:5'
+    build: '.'
     ports:
         - '4444:4444'
     volumes:
-      - 'this-place-rocks-wordpress_data:/bitnami'
+      - 'this-gym-rocks-wordpress_data:/bitnami'
       - './php.ini:/opt/bitnami/php/lib/php.ini'
     depends_on:
-      - this.place.rocks.mariadb
+      - this.gym.rocks.mariadb
     environment:
       - WORDPRESS_DATABASE_USER=root
       - WORDPRESS_DATABASE_PASSWORD=password
-      - MARIADB_HOST=this.place.rocks.mariadb
+      - MARIADB_HOST=this.gym.rocks.mariadb
       - MARIADB_PORT_NUMBER=3311
       - WORDPRESS_DATABASE_NAME=bitnami_wordpress
-      - VIRTUAL_HOST=this.place.frickin.rocks
-      - LETSENCRYPT_HOST=this.place.frickin.rocks
+      - VIRTUAL_HOST=this.gym.frickin.rocks
+      - LETSENCRYPT_HOST=this.gym.frickin.rocks
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - mongonet
 
 
 volumes:
-  this-place-rocks-mariadb_data:
+  this-gym-rocks-mariadb_data:
     driver: local
-  this-place-rocks-wordpress_data:
+  this-gym-rocks-wordpress_data:
     driver: local
 
 networks:
