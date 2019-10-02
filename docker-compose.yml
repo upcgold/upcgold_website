@@ -27,8 +27,10 @@ services:
     volumes:
       - 'divi-rocks-wordpress_data:/bitnami'
       - './php.ini:/opt/bitnami/php/lib/php.ini'
-      - './Divi:/bitnami/wordpress/wp-content/themes'
-      - './Extra:/bitnami/wordpress/wp-content/themes'
+      - './Divi:/bitnami/wordpress/wp-content/themes/Divi'
+      - './Extra:/bitnami/wordpress/wp-content/themes/Extra'
+      - './bloom:/bitnami/wordpress/wp-content/plugins/bloom'
+      - './monarch:/bitnami/wordpress/wp-content/plugins/monarch'
     depends_on:
       - divi.rocks.mariadb
     environment:
