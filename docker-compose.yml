@@ -1,58 +1,39 @@
-version: '2'
+version: '3.3'
+
 services:
-  divi.rocks.mariadb:
-    container_name: divi.rocks.mariadb
-    image: 'divi.frickin.rocks/mariadb:10.3'
-    build: './mariadb/10.3'
+  db:
+    image: mysql:5.7
     volumes:
-      - 'divi-rocks-mariadb_data:/bitnami'
-    ports:
-        - '3314:3314'
+      - db_data:/var/lib/mysql
+    restart: always
     environment:
-      - MYSQL_DATABASE=bitnami_wordpress
-      - MYSQL_USERNAME=root
-      - MYSQL_ROOT_PASSWORD=password
-        #      - MYSQL_MASTER_PORT_NUMBER=3310
-      - ALLOW_EMPTY_PASSWORD=yes
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
     networks:
       - mongonet
 
-
-  divi.frickin.rocks:
-    container_name: divi.frickin.rocks.wordpress
-    image: 'bitnami/wordpress:5'
-    build: '.'
-    ports:
-        - '4447:4447'
-    volumes:
-      - 'divi-rocks-wordpress_data:/bitnami'
-      - './php.ini:/opt/bitnami/php/lib/php.ini'
-      - './Divi:/bitnami/wordpress/wp-content/themes/Divi'
-      - './Extra:/bitnami/wordpress/wp-content/themes/Extra'
-      - './bloom:/bitnami/wordpress/wp-content/plugins/bloom'
-      - './monarch:/bitnami/wordpress/wp-content/plugins/monarch'
+  wordpress:
     depends_on:
-      - divi.rocks.mariadb
+      - db
+    image: wordpress:latest
+    ports:
+      - "4447:4447"
+    restart: always
     environment:
-      - WORDPRESS_DATABASE_USER=root
-      - WORDPRESS_DATABASE_PASSWORD=password
-      - MARIADB_HOST=divi.rocks.mariadb
-      - MARIADB_PORT_NUMBER=3314
-      - WORDPRESS_DATABASE_NAME=bitnami_wordpress
-      - VIRTUAL_HOST=divi.frickin.rocks
-      - LETSENCRYPT_HOST=divi.frickin.rocks
-      - ALLOW_EMPTY_PASSWORD=yes
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      VIRTUAL_HOST: upcgold.io
+      LETSENCRYPT_HOST: upcgold.io
     networks:
       - mongonet
-
 
 volumes:
-  divi-rocks-mariadb_data:
-    driver: local
-  divi-rocks-wordpress_data:
-    driver: local
+    db_data: {}
 
 networks:
   mongonet:
     external: true
-
