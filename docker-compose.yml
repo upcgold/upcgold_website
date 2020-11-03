@@ -26,12 +26,11 @@ services:
       - db
     image: wordpress:latest
     volumes:
-      - './upcgold_code:/var/www/html'
-        #      - './Divi:/var/www/html/wp-content/themes/Divi'
-        #      - './Extra:/var/www/html/wp-content/themes/Extra'
-        #      - './bloom:/var/www/html/wp-content/plugins/bloom'
-        #      - './monarch:/var/www/html/wp-content/plugins/monarch'
-        #      - './php.ini:/usr/local/etc/php/php.ini'
+      - './Divi:/var/www/html/wp-content/themes/Divi'
+      - './Extra:/var/www/html/wp-content/themes/Extra'
+      - './bloom:/var/www/html/wp-content/plugins/bloom'
+      - './monarch:/var/www/html/wp-content/plugins/monarch'
+      - './php.ini:/usr/local/etc/php/php.ini'
 
     ports:
       - "4447:4447"
