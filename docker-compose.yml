@@ -4,6 +4,9 @@ services:
   db:
     image: mysql:5.7
     volumes:
+      - './data:/docker-entrypoint-initdb.d'
+
+    volumes:
       - db_data:/var/lib/mysql
     restart: always
     environment:
@@ -14,15 +17,20 @@ services:
     networks:
       - mongonet
 
+# Workflow: when making changes to the website via the gui, remember to exec
+# into the container and commit.  then exit the container and pull from the
+# host.  the code will go into the upcgold_code directory, and then mount it
+# below
   wordpress:
     depends_on:
       - db
     image: wordpress:latest
     volumes:
-      - './Divi:/var/www/html/wp-content/themes/Divi'
-      - './Extra:/var/www/html/wp-content/themes/Extra'
-      - './bloom:/var/www/html/wp-content/plugins/bloom'
-      - './monarch:/var/www/html/wp-content/plugins/monarch'
+      - './upcgold_code:/var/www/html'
+        #      - './Divi:/var/www/html/wp-content/themes/Divi'
+        #      - './Extra:/var/www/html/wp-content/themes/Extra'
+        #      - './bloom:/var/www/html/wp-content/plugins/bloom'
+        #      - './monarch:/var/www/html/wp-content/plugins/monarch'
         #      - './php.ini:/usr/local/etc/php/php.ini'
 
     ports:
