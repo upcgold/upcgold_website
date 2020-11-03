@@ -3,11 +3,10 @@ version: '3.3'
 services:
   db:
     image: mysql:5.7
-    volumes:
-      - './data:/docker-entrypoint-initdb.d'
 
     volumes:
       - db_data:/var/lib/mysql
+      - './data:/docker-entrypoint-initdb.d'
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
@@ -40,8 +39,8 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
-      VIRTUAL_HOST: upcgold.io
-      LETSENCRYPT_HOST: upcgold.io
+      VIRTUAL_HOST: appfront.upcgold.io
+      LETSENCRYPT_HOST: appfront.upcgold.io
     networks:
       - mongonet
 
